@@ -20,7 +20,7 @@ class Usuario(db.Model):
     def __init__(self, nome, email, senha, tipo="tecnico"):
         self.nome = nome
         self.email = email
-        self.senha_hash = generate_password_hash(senha)
+        self.senha_hash = senha #generate_password_hash(senha)
         self.tipo = tipo
 
     def verificar_senha(self, senha):
