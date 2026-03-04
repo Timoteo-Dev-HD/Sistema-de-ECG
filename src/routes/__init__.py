@@ -2,6 +2,7 @@ from flask import (
     Blueprint,
     render_template,
     request,
+    jsonify,
     url_for,
     redirect,
     session,
@@ -10,6 +11,9 @@ from flask import (
 )
 import bcrypt
 import os
+import base64
+import zlib
+import xml.etree.ElementTree as ET
 
 from sqlalchemy.orm import joinedload
 
@@ -148,6 +152,51 @@ def print_exam(id):
         return {"status": "Enviado para impressora"}
     except Exception as e:
         return {"erro": str(e)}, 500
+    
+    
+@web.route("/get_ecg_data/<int:exam_id>")
+@login_required
+def get_ecg_data(exam_id):
+
+    exam = EcgExam.query.get_or_404(exam_id)
+
+    project_root = os.path.abspath(os.path.join(current_app.root_path, ".."))
+    xml_file = exam.arquivo.replace(".pdf", ".xml")
+    xml_path = os.path.join(project_root, "ecg_local", xml_file)
+
+    if not os.path.exists(xml_path):
+        return jsonify([])
+
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    data_node = root.find(".//data")
+
+    if data_node is None:
+        return jsonify([])
+
+    encoded = data_node.text.strip()
+
+    decoded = base64.b64decode(encoded)
+
+    try:
+        # tentativa 1: zlib padrão
+        decompressed = zlib.decompress(decoded)
+
+    except:
+        try:
+            # tentativa 2: raw deflate (muito comum em ECG)
+            decompressed = zlib.decompress(decoded, -zlib.MAX_WBITS)
+
+        except:
+            # tentativa 3: dados não comprimidos
+            decompressed = decoded
+
+    # converter bytes para valores ECG
+    values = list(decompressed)
+
+    # limitar pontos para o gráfico
+    return jsonify(values[:1500])
 
 # ==========================
 # REGISTRO DO BLUEPRINT
