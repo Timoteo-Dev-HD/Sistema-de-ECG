@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Paciente - {{ patient.nome }}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Dados do Paciente</h2>
+
+    <div class="patient-grid">
+
+        <div><strong>ID Interno:</strong> {{ patient.id }}</div>
+        <div><strong>ID Externo:</strong> {{ patient.external_id or "-" }}</div>
+
+        <div><strong>Nome:</strong> {{ patient.nome }}</div>
+        <div><strong>CPF:</strong> {{ patient.cpf or "-" }}</div>
+
+        <div><strong>Sexo:</strong>
+            {% if patient.sexo %}
+                {{ patient.sexo.value }}
+            {% else %}
+                -
+            {% endif %}
+        </div>
+
+        <div><strong>Data Nascimento:</strong>
+            {% if patient.data_nascimento %}
+                {{ patient.data_nascimento.strftime('%d/%m/%Y') }}
+            {% else %}
+                -
+            {% endif %}
+        </div>
+
+        <div><strong>Idade:</strong>
+            {% if patient.idade %}
+                {{ patient.idade }} {{ patient.idade_unidade or "" }}
+            {% else %}
+                -
+            {% endif %}
+        </div>
+
+        <div><strong>Setor:</strong> {{ patient.setor or "-" }}</div>
+        <div><strong>Leito:</strong> {{ patient.leito or "-" }}</div>
+
+        <div><strong>Peso:</strong>
+            {% if patient.peso_kg %}
+                {{ patient.peso_kg }} kg
+            {% else %}
+                -
+            {% endif %}
+        </div>
+
+        <div><strong>Altura:</strong>
+            {% if patient.altura_cm %}
+                {{ patient.altura_cm }} cm
+            {% else %}
+                -
+            {% endif %}
+        </div>
+
+        <div><strong>Criado em:</strong>
+            {{ patient.created_at.strftime('%d/%m/%Y %H:%M') }}
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <h2>Exames ECG</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Frequência Média</th>
+                <th>Observações</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for exam in exams %}
+            <tr>
+                <td>{{ exam.data_exame.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>{{ exam.frequencia_media }} BPM</td>
+                <td>{{ exam.observacoes or "-" }}</td>
+                <td>
+                    <div class="action-buttons">
+
+                        <a href="{{ url_for('web.ecg_view', exam_id=exam.id) }}">
+                            <button class="btn btn-view">Visualizar</button>
+                        </a>
+
+                        <a href="{{ url_for('web.view_pdf', id=exam.id) }}" target="_blank">
+                            <button class="btn btn-pdf">PDF</button>
+                        </a>
+
+                        <a href="{{ url_for('web.print_exam', id=exam.id) }}">
+                            <button class="btn btn-print">Imprimir</button>
+                        </a>
+
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

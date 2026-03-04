@@ -5,7 +5,7 @@ import datetime
 
 class Usuario(db.Model):
 
-    __tablename__ = "usuarios"
+    __tablename__ = 'usuarios'
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
@@ -15,16 +15,16 @@ class Usuario(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     # relacionamento
-    exames = db.relationship("EcgExam", backref="usuario", lazy=True)
+    exames = db.relationship('EcgExam', back_populates='usuario', lazy=True)
 
-    def __init__(self, nome, email, senha, tipo="tecnico"):
+    def __init__(self, nome, email, senha, tipo='tecnico'):
         self.nome = nome
         self.email = email
-        self.senha_hash = senha #generate_password_hash(senha)
+        self.senha_hash = senha   # generate_password_hash(senha)
         self.tipo = tipo
 
     def verificar_senha(self, senha):
         return check_password_hash(self.senha_hash, senha)
 
     def __repr__(self):
-        return f"<Usuario {self.nome}>"
+        return f'<Usuario {self.nome}>'

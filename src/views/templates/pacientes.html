@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h3>Lista de Pacientes</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Último Exame</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for p in patients %}
+            <tr>
+                <td>{{ p.nome }}</td>
+                <td>{{ p.cpf or "-" }}</td>
+
+                <td>
+                    {% if p.exames %}
+                        {{ p.exames[-1].data_exame.strftime('%d/%m/%Y') }}
+                    {% else %}
+                        Sem exame
+                    {% endif %}
+                </td>
+
+                <td>
+                    <!-- Ver paciente -->
+                    <a href="{{ url_for('web.paciente_detail', id=p.id) }}">
+                        <button>Detalhes</button>
+                    </a>
+
+                    {% if p.exames %}
+                        {% set exam = p.exames|sort(attribute='data_exame')|last %}
+
+                        <!-- Ver ECG -->
+                        <a href="{{ url_for('web.ecg_view', exam_id=exam.id) }}">
+                            <button>Ver ECG</button>
+                        </a>
+
+                        <!-- Ver PDF -->
+                        <a href="{{ url_for('web.view_pdf', id=exam.id) }}" target="_blank">
+                            <button>PDF</button>
+                        </a>
+
+                        <!-- Imprimir -->
+                        <a href="{{ url_for('web.print_exam', id=exam.id) }}">
+                            <button>Imprimir</button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

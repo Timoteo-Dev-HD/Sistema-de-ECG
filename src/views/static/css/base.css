@@ -1,0 +1,238 @@
+/* =========================
+   RESET BÁSICO
+========================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #2c3e50;
+}
+
+/* =========================
+   HEADER
+========================= */
+.main-header {
+    background: linear-gradient(90deg, #1f3c88, #274c9b);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.main-header h2 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+nav a {
+    color: white;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    opacity: 1;
+    border-bottom: 2px solid white;
+    padding-bottom: 3px;
+}
+
+/* =========================
+   USER AREA
+========================= */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-logout {
+    background-color: #dc3545;
+    padding: 6px 14px;
+    border-radius: 4px;
+    color: white;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #b52a37;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* =========================
+   CARD
+========================= */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* =========================
+   BOTÕES
+========================= */
+button {
+    background-color: #1f3c88;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #162f6b;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input, select {
+    padding: 8px 10px;
+    width: 100%;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #1f3c88;
+    box-shadow: 0 0 0 2px rgba(31,60,136,0.1);
+}
+
+/* =========================
+   LINKS
+========================= */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================
+   TABELAS
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #eef2f7;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+table tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: 0.2s;
+}
+
+table tr:hover {
+    background-color: #f8f9fc;
+}
+
+.patient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px 20px;
+}
+
+/* Container dos botões */
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Base */
+.btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.2s ease-in-out;
+}
+
+/* Visualizar (primário) */
+.btn-view {
+    background-color: #1f3c88;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #162f6b;
+}
+
+/* PDF (secundário) */
+.btn-pdf {
+    background-color: #4e73df;
+    color: white;
+}
+
+.btn-pdf:hover {
+    background-color: #2e59d9;
+}
+
+/* Imprimir (ação crítica) */
+.btn-print {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-print:hover {
+    background-color: #1e7e34;
+}

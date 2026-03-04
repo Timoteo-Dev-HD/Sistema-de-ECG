@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}ECG{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ecg_view.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="card ecg-info">
+    <p><strong>Data:</strong> {{ exam.data_exame }}</p>
+    <p><strong>Frequência Média:</strong> {{ exam.frequencia_media }} BPM</p>
+
+    <!-- BOTÃO PDF AQUI -->
+    <a href="{{ url_for('web.view_pdf', id=exam.id) }}" target="_blank">
+        <button>Visualizar PDF</button>
+    </a>
+
+</div>
+
+<div class="card ecg-chart-container">
+    <canvas id="ecgChart"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+fetch("/get_ecg_data/{{ exam.id }}")
+.then(response => response.json())
+.then(data => {
+    const ctx = document.getElementById('ecgChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map((_, i) => i),
+            datasets: [{
+                data: data,
+                borderWidth: 1,
+                pointRadius: 0
+            }]
+        }
+    });
+});
+</script>
+{% endblock %}

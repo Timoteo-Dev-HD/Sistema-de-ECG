@@ -11,3 +11,7 @@ class Config:
     UPLOAD_FOLDER = 'uploads'
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+    
+    # Configuração do FTP
+    ECG_INBOX_DIR = os.getenv("ECG_INBOX_DIR", "/srv/zoncare/ecg")
+    ECG_STORAGE_DIR = os.getenv("ECG_STORAGE_DIR", "/srv/zoncare/storage") 
