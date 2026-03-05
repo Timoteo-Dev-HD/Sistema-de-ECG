@@ -6,6 +6,8 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+    JWT_ACESS_TOKEN_EXPIRES = 3600
+    JWT_TOKEN_LOCATION = ["headers"]
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = 'uploads'

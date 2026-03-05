@@ -9,6 +9,7 @@ from flask import (
     send_file,
     current_app    
 )
+from flask_jwt_extended import jwt_required, create_access_token
 import bcrypt
 import os
 import base64
@@ -117,6 +118,7 @@ def listar_pacientes():
     patients = (
         Paciente.query
         .options(joinedload(Paciente.exames))
+        .order_by(Paciente.created_at.desc())
         .all()
     )
 
