@@ -1,6 +1,6 @@
 from flask import Flask
 from .settings.config import Config
-from .settings.extensions import db, migrate, bootstrap
+from .settings.extensions import db, migrate
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from src.services.ecg_import_service import import_local_ecgs
@@ -17,7 +17,7 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
-    bootstrap.init_app(app)
+    # bootstrap.init_app(app)
 
     try:
         from src.models.usuario_model import Usuario
