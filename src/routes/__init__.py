@@ -3,6 +3,7 @@ from flask import (
     render_template,
     request,
     jsonify,
+    flash,
     url_for,
     redirect,
     session,
@@ -151,7 +152,9 @@ def print_exam(id):
 
     try:
         print_pdf_to_ip("172.19.0.30", file_path)
-        return {"status": "Enviado para impressora"}
+        flash("Enviado para impressora com Sucesso", "success")
+        return redirect(url_for('listar_pacientes'))
+        #return {"status": "Enviado para impressora"}
     except Exception as e:
         return {"erro": str(e)}, 500
     
